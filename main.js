@@ -1,11 +1,8 @@
-class myClock {
-    constructor(selectedHtmlElement) {
-        this.selectedHtmlElement = selectedHtmlElement || document.body
-        this.generateDOMElements(this.selectedHtmlElement)
-        this.constructor.startClock()
+class CreateDOMElements {
+    constructor(outputHtmlELement) {
+        this.createDOMElements(outputHtmlELement)
     }
-
-    generateDOMElements(outputHtmlELement) {
+    createDOMElements(outputHtmlELement) {
         let clock = document.createElement('div');
         clock.classList.add('clock');
         outputHtmlELement.appendChild(clock);
@@ -18,6 +15,18 @@ class myClock {
             clock.insertAdjacentHTML("afterbegin", newNumber);
         }
     }
+}
+
+class Clock {
+    constructor(selectedHtmlElement) {
+        this.selectedHtmlElement = selectedHtmlElement || document.body
+        this.generateDOMElements(this.selectedHtmlElement)
+        this.constructor.startClock()
+    }
+
+    generateDOMElements(outputHtmlELement) {
+        let myClockDOM = new CreateDOMElements(outputHtmlELement);
+    }
 
     static startClock() {
         const HOUR_ARROW = document.querySelector('[data-hour-arrow]');
@@ -28,9 +37,9 @@ class myClock {
         let secondsValue = (currentTime.getSeconds() / 60);
         let minutesValue = ((secondsValue + currentTime.getMinutes()) / 60);
         let hoursValue = ((minutesValue + currentTime.getHours()) / 12);
-        myClock.setRotation(HOUR_ARROW, hoursValue);
-        myClock.setRotation(MINUTE_ARROW, minutesValue);
-        myClock.setRotation(SECOND_ARROW, secondsValue);
+        Clock.setRotation(HOUR_ARROW, hoursValue);
+        Clock.setRotation(MINUTE_ARROW, minutesValue);
+        Clock.setRotation(SECOND_ARROW, secondsValue);
         setInterval(this.startClock, 1000);
     }
 
@@ -40,4 +49,4 @@ class myClock {
 
 }
 
-const startShowTime = new myClock();
+const startShowTime = new Clock();
